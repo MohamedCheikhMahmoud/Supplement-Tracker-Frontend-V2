@@ -1,0 +1,135 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-main: #0b1120;
+  --bg-soft: #111827;
+  --bg-card: rgba(30, 41, 59, 0.82);
+
+  --border-soft: rgba(148, 163, 184, 0.18);
+
+  --text-main: #f8fafc;
+  --text-muted: #cbd5e1;
+
+  --purple: #a855f7;
+  --purple-dark: #7e22ce;
+  --purple-light: #c084fc;
+
+  --danger: #ef4444;
+  --success: #22c55e;
+
+  --shadow-purple: 0 18px 45px rgba(168, 85, 247, 0.22);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(168, 85, 247, 0.16), transparent 32%),
+    radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.08), transparent 28%),
+    var(--bg-main);
+  color: var(--text-main);
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.primary-button,
+button {
+  background: linear-gradient(135deg, var(--purple-dark), var(--purple));
+  color: white;
+  border: none;
+  border-radius: 14px;
+  padding: 14px 20px;
+  font-weight: 800;
+  transition: all 0.25s ease;
+}
+
+.primary-button:hover,
+button:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 14px 35px rgba(168, 85, 247, 0.38);
+  background: linear-gradient(135deg, var(--purple), var(--purple-light));
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  background: rgba(15, 23, 42, 0.82);
+  border: 1px solid var(--border-soft);
+  color: var(--text-main);
+  padding: 15px 16px;
+  border-radius: 14px;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+input:hover,
+textarea:hover,
+select:hover {
+  border-color: var(--purple);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.16);
+}
+
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: 22px;
+  backdrop-filter: blur(18px);
+  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.24);
+  transition: all 0.28s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(168, 85, 247, 0.62);
+  box-shadow: var(--shadow-purple);
+}
+
+.page-title {
+  font-size: clamp(42px, 6vw, 72px);
+  line-height: 1;
+  margin: 0;
+  color: var(--purple);
+  letter-spacing: -2px;
+}
+
+.page-subtitle {
+  color: var(--text-muted);
+  font-size: 18px;
+  margin-top: 16px;
+}
