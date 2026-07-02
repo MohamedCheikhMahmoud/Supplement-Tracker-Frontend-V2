@@ -1,7 +1,7 @@
 import type { Supplement } from '@/types/Supplement'
 import type { User } from '@/types/User'
 
-const API_BASE_URL = 'http://localhost:8080'
+const API_BASE_URL = 'https://mysupps-backend.onrender.com'
 
 export async function getSupplements(): Promise<Supplement[]> {
   const response = await fetch(`${API_BASE_URL}/supplements`)
