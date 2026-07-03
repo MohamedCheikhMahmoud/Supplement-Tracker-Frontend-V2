@@ -8,6 +8,7 @@ const router = useRouter()
 const username = ref('')
 const email = ref('')
 const password = ref('')
+const confirmPassword = ref('')
 const errorMessage = ref('')
 const loading = ref(false)
 
@@ -15,6 +16,7 @@ function validateForm() {
   if (username.value.trim().length < 2) return 'Username must contain at least 2 characters.'
   if (!email.value.includes('@')) return 'Please enter a valid email address.'
   if (password.value.length < 8) return 'Password must be at least 8 characters.'
+  if (password.value !== confirmPassword.value) return 'Passwords do not match.'
   return ''
 }
 
@@ -36,8 +38,13 @@ async function handleRegister() {
       password: password.value,
     })
 
+    localStorage.setItem('userId', String(user.id))
     localStorage.setItem('username', user.username)
     localStorage.setItem('email', user.email)
+    localStorage.setItem('age', String(user.age || ''))
+    localStorage.setItem('address', user.address || '')
+    localStorage.setItem('city', user.city || '')
+    localStorage.setItem('fitnessGoal', user.fitnessGoal || '')
 
     await router.push('/dashboard')
   } catch {
@@ -58,6 +65,7 @@ async function handleRegister() {
         <input v-model="username" type="text" placeholder="Username" />
         <input v-model="email" type="email" placeholder="Email" />
         <input v-model="password" type="password" placeholder="Password" />
+        <input v-model="confirmPassword" type="password" placeholder="Confirm password" />
 
         <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
 

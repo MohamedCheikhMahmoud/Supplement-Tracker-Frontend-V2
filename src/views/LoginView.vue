@@ -16,6 +16,12 @@ function validateForm() {
   return ''
 }
 
+function showForgotPassword() {
+  alert(
+    'Password reset is not available in this demo version.\n\nPlease contact the administrator or create a new account.',
+  )
+}
+
 async function handleLogin() {
   errorMessage.value = ''
 
@@ -52,10 +58,15 @@ async function handleLogin() {
     <div class="auth-card glass-card">
       <p class="label">WELCOME BACK</p>
       <h1>Sign in</h1>
+      <p class="subtitle">Sign in to manage your supplements and track your daily progress.</p>
 
       <form @submit.prevent="handleLogin">
         <input v-model="email" type="email" placeholder="Email" />
         <input v-model="password" type="password" placeholder="Password" />
+
+        <div class="forgot-password">
+          <a href="#" @click.prevent="showForgotPassword"> Forgot your password? </a>
+        </div>
 
         <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
 
@@ -92,12 +103,38 @@ async function handleLogin() {
 
 h1 {
   font-size: 44px;
-  margin: 10px 0 28px;
+  margin: 10px 0 8px;
+}
+
+.subtitle {
+  color: #cbd5e1;
+  margin-bottom: 26px;
+  line-height: 1.5;
 }
 
 form {
   display: grid;
   gap: 16px;
+}
+
+.forgot-password {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -6px;
+  margin-bottom: -2px;
+}
+
+.forgot-password a {
+  color: #a855f7;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.forgot-password a:hover {
+  color: #c084fc;
+  text-decoration: underline;
 }
 
 .error {
