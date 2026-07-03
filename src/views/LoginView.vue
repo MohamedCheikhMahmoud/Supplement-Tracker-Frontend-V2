@@ -30,8 +30,13 @@ async function handleLogin() {
   try {
     const user = await loginUser(email.value, password.value)
 
+    localStorage.setItem('userId', String(user.id))
     localStorage.setItem('username', user.username)
     localStorage.setItem('email', user.email)
+    localStorage.setItem('age', String(user.age || ''))
+    localStorage.setItem('address', user.address || '')
+    localStorage.setItem('city', user.city || '')
+    localStorage.setItem('fitnessGoal', user.fitnessGoal || '')
 
     await router.push('/dashboard')
   } catch {
