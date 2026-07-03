@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRouter, RouterLink } from 'vue-router'
+import { RouterLink } from 'vue-router'
 import { loginUser } from '@/services/api'
-
-const router = useRouter()
 
 const email = ref('')
 const password = ref('')
@@ -36,17 +34,15 @@ async function handleLogin() {
   try {
     const user = await loginUser(email.value, password.value)
 
-    localStorage.setItem('userId', String(user.id))
-    localStorage.setItem('username', user.username)
-    localStorage.setItem('email', user.email)
+    localStorage.setItem('userId', String(user.id ?? 'logged-in'))
+    localStorage.setItem('username', user.username || email.value)
+    localStorage.setItem('email', user.email || email.value)
     localStorage.setItem('age', String(user.age || ''))
     localStorage.setItem('address', user.address || '')
     localStorage.setItem('city', user.city || '')
     localStorage.setItem('fitnessGoal', user.fitnessGoal || '')
 
-    window.dispatchEvent(new Event('user-login-changed'))
-
-    await router.push('/dashboard')
+    window.location.href = '/dashboard'
   } catch {
     errorMessage.value = 'Wrong email or password. Please try again.'
   } finally {
@@ -67,7 +63,7 @@ async function handleLogin() {
         <input v-model="password" type="password" placeholder="Password" />
 
         <div class="forgot-password">
-          <a href="#" @click.prevent="showForgotPassword">Forgot your password?</a>
+          <a href="#" @click.prevent="showForgotPassword"> Forgot your password? </a>
         </div>
 
         <p v-if="errorMessage" class="error">{{ errorMessage }}</p>

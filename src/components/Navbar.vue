@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue'
 
-const router = useRouter()
 const isLoggedIn = ref(false)
 
 function updateUserState() {
@@ -11,14 +9,9 @@ function updateUserState() {
 
 onMounted(() => {
   updateUserState()
-  window.addEventListener('user-login-changed', updateUserState)
 })
 
-onUnmounted(() => {
-  window.removeEventListener('user-login-changed', updateUserState)
-})
-
-async function logout() {
+function logout() {
   localStorage.removeItem('userId')
   localStorage.removeItem('username')
   localStorage.removeItem('email')
@@ -27,9 +20,7 @@ async function logout() {
   localStorage.removeItem('city')
   localStorage.removeItem('fitnessGoal')
 
-  window.dispatchEvent(new Event('user-login-changed'))
-
-  await router.push('/login')
+  window.location.href = '/login'
 }
 </script>
 
