@@ -3,8 +3,19 @@ import type { User } from '@/types/User'
 
 const API_BASE_URL = 'https://mysupps-backend.onrender.com'
 
+function getUserId(): number {
+  const userId = Number(localStorage.getItem('userId'))
+
+  if (!userId) {
+    throw new Error('No user ID found. Please log in again.')
+  }
+
+  return userId
+}
+
 export async function getSupplements(): Promise<Supplement[]> {
-  const response = await fetch(`${API_BASE_URL}/supplements`)
+  const userId = getUserId()
+  const response = await fetch(`${API_BASE_URL}/supplements/user/${userId}`)
   return response.json()
 }
 
@@ -13,18 +24,23 @@ export async function filterSupplements(
   category: string,
   taken: string,
 ): Promise<Supplement[]> {
+  const userId = getUserId()
   const params = new URLSearchParams()
 
   if (query) params.append('query', query)
   if (category) params.append('category', category)
   if (taken) params.append('taken', taken)
 
-  const response = await fetch(`${API_BASE_URL}/supplements/filter?${params.toString()}`)
+  const response = await fetch(
+    `${API_BASE_URL}/supplements/user/${userId}/filter?${params.toString()}`,
+  )
   return response.json()
 }
 
 export async function createSupplement(supplement: Supplement): Promise<Supplement> {
-  const response = await fetch(`${API_BASE_URL}/supplements`, {
+  const userId = getUserId()
+
+  const response = await fetch(`${API_BASE_URL}/supplements/user/${userId}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(supplement),
