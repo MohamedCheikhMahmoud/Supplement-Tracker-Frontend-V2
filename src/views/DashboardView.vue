@@ -80,9 +80,7 @@ const achievements = computed(() => [
     <div class="hero">
       <p class="label">DASHBOARD</p>
 
-      <h1>
-        {{ greeting.emoji }} {{ greeting.text }}, {{ username }} 👋
-      </h1>
+      <h1>{{ greeting.emoji }} {{ greeting.text }}, {{ username }} 👋</h1>
 
       <p>Here is your supplement progress for today.</p>
     </div>
@@ -111,9 +109,7 @@ const achievements = computed(() => [
       <div class="glass-card schedule-card">
         <h2>Today’s Schedule</h2>
 
-        <div v-if="todaySchedule.length === 0" class="empty">
-          No supplements scheduled yet.
-        </div>
+        <div v-if="todaySchedule.length === 0" class="empty">No supplements scheduled yet.</div>
 
         <div v-else class="schedule-list">
           <div v-for="supplement in todaySchedule" :key="supplement.id" class="schedule-item">
@@ -308,13 +304,39 @@ h1 {
 }
 
 @media (max-width: 950px) {
-  .dashboard-grid,
+  .dashboard {
+    padding: 0 16px;
+  }
+
+  h1 {
+    font-size: 40px;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+    overflow-x: auto;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1.2fr 1fr;
+    overflow-x: auto;
+  }
+
+  .progress-card,
+  .schedule-card,
+  .achievements-card {
+    min-width: 360px;
+  }
+
   .achievement-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    overflow-x: auto;
   }
 
   .schedule-item {
-    grid-template-columns: 1fr;
+    grid-template-columns: 80px 1fr auto;
+    min-width: 420px;
   }
 }
+
 </style>

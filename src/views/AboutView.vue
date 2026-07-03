@@ -75,4 +75,24 @@ li {
 ul {
   padding-left: 22px;
 }
+
+@media (max-width: 768px) {
+  .about-page {
+    max-width: 1000px;
+    padding: 0 16px;
+  }
+
+  .about-card {
+    padding: 28px;
+  }
+
+  h1 {
+    font-size: 42px;
+  }
+
+  p,
+  li {
+    font-size: 15px;
+  }
+}
 </style>

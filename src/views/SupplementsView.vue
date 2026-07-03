@@ -104,8 +104,14 @@ function showToast(message: string, type: 'success' | 'error') {
 }
 
 @media (max-width: 800px) {
+  .supplements-page {
+    padding: 0 16px;
+    overflow-x: auto;
+  }
+
   .page-header {
-    flex-direction: column;
+    flex-direction: row;
+    min-width: 760px;
   }
 }
 </style>

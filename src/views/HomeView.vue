@@ -202,23 +202,31 @@ h1 {
 }
 
 @media (max-width: 1000px) {
+  .home-page {
+    padding: 0 16px;
+  }
+
+  .hero {
+    padding: 60px 10px 70px;
+  }
+
+  .subtitle {
+    font-size: 20px;
+  }
+
   .feature-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(4, minmax(220px, 1fr));
+    overflow-x: auto;
   }
 
   .steps {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    min-width: 900px;
   }
 
-  .step-arrow {
-    transform: rotate(0deg);
-    margin: 0 auto;
+  .section {
+    overflow-x: auto;
   }
 }
 
-@media (max-width: 650px) {
-  .feature-grid {
-    grid-template-columns: 1fr;
-  }
-}
 </style>

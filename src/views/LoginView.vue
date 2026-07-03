@@ -158,4 +158,20 @@ button:disabled {
   color: #a855f7;
   font-weight: 800;
 }
+
+@media (max-width: 768px) {
+  .auth-page {
+    padding: 0 16px;
+  }
+
+  .auth-card {
+    width: 100%;
+    max-width: 460px;
+    padding: 28px;
+  }
+
+  h1 {
+    font-size: 38px;
+  }
+}
 </style>

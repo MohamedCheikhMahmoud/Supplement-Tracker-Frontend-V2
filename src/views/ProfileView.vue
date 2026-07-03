@@ -422,16 +422,26 @@ button {
 }
 
 @media (max-width: 900px) {
+  .profile-page {
+    padding: 32px 16px;
+    overflow-x: auto;
+  }
+
   .profile-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 360px 1fr;
+    min-width: 900px;
+  }
+
+  .security-box {
+    min-width: 900px;
   }
 
   .two-columns {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 
   button {
-    width: 100%;
+    width: auto;
   }
 }
 </style>

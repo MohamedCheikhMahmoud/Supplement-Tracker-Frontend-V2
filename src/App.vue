@@ -30,8 +30,14 @@ import Footer from '@/components/Footer.vue'
 }
 
 @media (max-width: 768px) {
+  .app-shell {
+    min-width: 390px;
+  }
+
   .page-wrapper {
-    padding: 40px 18px;
+    padding: 40px 16px;
+    overflow-x: auto;
   }
 }
 </style>
+
