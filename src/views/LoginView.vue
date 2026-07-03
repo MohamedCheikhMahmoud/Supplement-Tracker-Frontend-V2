@@ -44,6 +44,8 @@ async function handleLogin() {
     localStorage.setItem('city', user.city || '')
     localStorage.setItem('fitnessGoal', user.fitnessGoal || '')
 
+    window.dispatchEvent(new Event('user-login-changed'))
+
     await router.push('/dashboard')
   } catch {
     errorMessage.value = 'Wrong email or password. Please try again.'
@@ -65,7 +67,7 @@ async function handleLogin() {
         <input v-model="password" type="password" placeholder="Password" />
 
         <div class="forgot-password">
-          <a href="#" @click.prevent="showForgotPassword"> Forgot your password? </a>
+          <a href="#" @click.prevent="showForgotPassword">Forgot your password?</a>
         </div>
 
         <p v-if="errorMessage" class="error">{{ errorMessage }}</p>

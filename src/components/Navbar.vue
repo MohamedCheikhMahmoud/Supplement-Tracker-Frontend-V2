@@ -1,19 +1,21 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-
-const username = ref('')
 const isLoggedIn = ref(false)
 
 function updateUserState() {
-  username.value = localStorage.getItem('username') || ''
   isLoggedIn.value = !!localStorage.getItem('userId')
 }
 
 onMounted(() => {
   updateUserState()
+  window.addEventListener('user-login-changed', updateUserState)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('user-login-changed', updateUserState)
 })
 
 async function logout() {
@@ -25,7 +27,8 @@ async function logout() {
   localStorage.removeItem('city')
   localStorage.removeItem('fitnessGoal')
 
-  updateUserState()
+  window.dispatchEvent(new Event('user-login-changed'))
+
   await router.push('/login')
 }
 </script>
