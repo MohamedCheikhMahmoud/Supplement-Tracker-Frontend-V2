@@ -1,27 +1,51 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { updateUser } from '@/services/api'
+
+const userId = Number(localStorage.getItem('userId'))
 
 const username = ref(localStorage.getItem('username') || '')
 const email = ref(localStorage.getItem('email') || '')
-const age = ref(localStorage.getItem('age') || '')
+const age = ref(localStorage.getItem('age') ? Number(localStorage.getItem('age')) : null)
 const address = ref(localStorage.getItem('address') || '')
 const city = ref(localStorage.getItem('city') || '')
 const fitnessGoal = ref(localStorage.getItem('fitnessGoal') || '')
+
 const successMessage = ref('')
+const errorMessage = ref('')
 
-function saveProfile() {
-  localStorage.setItem('username', username.value)
-  localStorage.setItem('email', email.value)
-  localStorage.setItem('age', age.value)
-  localStorage.setItem('address', address.value)
-  localStorage.setItem('city', city.value)
-  localStorage.setItem('fitnessGoal', fitnessGoal.value)
+async function saveProfile() {
+  try {
+    if (!userId) {
+      throw new Error('No user id found. Please login again.')
+    }
 
-  successMessage.value = 'Profile updated successfully.'
+    const updatedUser = await updateUser(userId, {
+      username: username.value,
+      email: email.value,
+      age: age.value,
+      address: address.value,
+      city: city.value,
+      fitnessGoal: fitnessGoal.value,
+    })
 
-  window.setTimeout(() => {
+    localStorage.setItem('username', updatedUser.username)
+    localStorage.setItem('email', updatedUser.email)
+    localStorage.setItem('age', String(updatedUser.age || ''))
+    localStorage.setItem('address', updatedUser.address || '')
+    localStorage.setItem('city', updatedUser.city || '')
+    localStorage.setItem('fitnessGoal', updatedUser.fitnessGoal || '')
+
+    successMessage.value = 'Profile updated successfully.'
+    errorMessage.value = ''
+
+    window.setTimeout(() => {
+      successMessage.value = ''
+    }, 2500)
+  } catch {
+    errorMessage.value = 'Profile could not be saved.'
     successMessage.value = ''
-  }, 2500)
+  }
 }
 </script>
 
@@ -30,6 +54,7 @@ function saveProfile() {
     <div class="profile-card glass-card">
       <p class="label">USER PROFILE</p>
       <h1>Edit Profile</h1>
+      <p class="subtitle">Update your personal information and fitness goal.</p>
 
       <form @submit.prevent="saveProfile">
         <input v-model="username" type="text" placeholder="Username" />
@@ -47,6 +72,7 @@ function saveProfile() {
         </select>
 
         <p v-if="successMessage" class="success">{{ successMessage }}</p>
+        <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
 
         <button type="submit">Save Profile</button>
       </form>
@@ -56,14 +82,15 @@ function saveProfile() {
 
 <style scoped>
 .profile-page {
-  min-height: 70vh;
+  min-height: 75vh;
   display: grid;
   place-items: center;
+  padding: 40px 20px;
 }
 
 .profile-card {
-  width: min(620px, 100%);
-  padding: 38px;
+  width: min(680px, 100%);
+  padding: 42px;
 }
 
 .label {
@@ -74,7 +101,12 @@ function saveProfile() {
 
 h1 {
   font-size: 44px;
-  margin: 10px 0 28px;
+  margin: 10px 0 10px;
+}
+
+.subtitle {
+  color: #cbd5e1;
+  margin-bottom: 28px;
 }
 
 form {
@@ -86,6 +118,14 @@ form {
   color: #86efac;
   background: rgba(34, 197, 94, 0.12);
   border: 1px solid rgba(34, 197, 94, 0.24);
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.error {
+  color: #fecaca;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.24);
   padding: 12px;
   border-radius: 12px;
 }

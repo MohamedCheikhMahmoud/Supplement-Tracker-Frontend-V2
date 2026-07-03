@@ -84,3 +84,17 @@ export async function loginUser(email: string, password: string): Promise<User> 
 
   return response.json()
 }
+
+export async function updateUser(id: number, user: User): Promise<User> {
+  const response = await fetch(`${API_BASE_URL}/users/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(user),
+  })
+
+  if (!response.ok) {
+    throw new Error('Profile update failed')
+  }
+
+  return response.json()
+}
