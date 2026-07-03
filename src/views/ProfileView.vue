@@ -17,7 +17,7 @@ const errorMessage = ref('')
 async function saveProfile() {
   try {
     if (!userId) {
-      throw new Error('No user id found. Please login again.')
+      throw new Error('No user ID found. Please log in again.')
     }
 
     const updatedUser = await updateUser(userId, {
@@ -31,18 +31,21 @@ async function saveProfile() {
 
     localStorage.setItem('username', updatedUser.username)
     localStorage.setItem('email', updatedUser.email)
-    localStorage.setItem('age', String(updatedUser.age || ''))
-    localStorage.setItem('address', updatedUser.address || '')
-    localStorage.setItem('city', updatedUser.city || '')
-    localStorage.setItem('fitnessGoal', updatedUser.fitnessGoal || '')
+    localStorage.setItem('age', String(updatedUser.age ?? ''))
+    localStorage.setItem('address', updatedUser.address ?? '')
+    localStorage.setItem('city', updatedUser.city ?? '')
+    localStorage.setItem('fitnessGoal', updatedUser.fitnessGoal ?? '')
 
     successMessage.value = 'Profile updated successfully.'
     errorMessage.value = ''
 
-    window.setTimeout(() => {
+    setTimeout(() => {
       successMessage.value = ''
     }, 2500)
-  } catch {
+  } catch (error) {
+    console.error(error)
+    alert(String(error))
+
     errorMessage.value = 'Profile could not be saved.'
     successMessage.value = ''
   }
