@@ -1,15 +1,31 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-const username = computed(() => localStorage.getItem('username'))
-const isLoggedIn = computed(() => !!username.value)
+const username = ref('')
+const isLoggedIn = ref(false)
+
+function updateUserState() {
+  username.value = localStorage.getItem('username') || ''
+  isLoggedIn.value = !!localStorage.getItem('userId')
+}
+
+onMounted(() => {
+  updateUserState()
+})
 
 async function logout() {
+  localStorage.removeItem('userId')
   localStorage.removeItem('username')
   localStorage.removeItem('email')
+  localStorage.removeItem('age')
+  localStorage.removeItem('address')
+  localStorage.removeItem('city')
+  localStorage.removeItem('fitnessGoal')
+
+  updateUserState()
   await router.push('/login')
 }
 </script>
@@ -63,6 +79,7 @@ async function logout() {
   color: #a855f7;
   font-size: 30px;
   font-weight: 900;
+  text-decoration: none;
 }
 
 .logo-icon {
@@ -89,6 +106,9 @@ async function logout() {
   font-size: 16px;
   font-weight: 750;
   transition: all 0.25s ease;
+  text-decoration: none;
+  background: none;
+  border: none;
 }
 
 .nav-links a:hover,
